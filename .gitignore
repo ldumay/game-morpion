@@ -1,2 +1,5 @@
+# Git ignore
+
+# Java Version & Netbeans package
 /version-java/Morpion/nbproject/private/
 /version-java/Morpion/build/
