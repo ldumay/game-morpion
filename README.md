@@ -1,2 +1,2 @@
-# game-morpion
-Créationd d'un Morpion
+# Jeux - Le Morpion
+Création d'un Morpion
