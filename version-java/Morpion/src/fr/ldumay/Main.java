@@ -5,6 +5,7 @@
  */
 package fr.ldumay;
 
+import ldumay.lib.infoSystem.infoSystem;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
@@ -12,6 +13,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 
 /**
  *
@@ -49,7 +51,7 @@ public class Main extends JFrame{
     JButton jButton_H = new JButton("_");
     JButton jButton_I = new JButton("_");
     
-    List player = new ArrayList();
+    ArrayList player = new ArrayList();
     boolean player_1 = false;
     boolean player_2 = false;
     
@@ -64,7 +66,7 @@ public class Main extends JFrame{
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
+        ArrayList infoOS = new infoSystem().InfosRunSystem(true, true);
         JFrame mainJFrame = new Main();
     }
     
@@ -77,15 +79,15 @@ public class Main extends JFrame{
         
         addWindowListener(l);
         
-        jButton_A.setSize(20, 20);jButton_A.setLocation(20, 20);jPanel.add(jButton_A);
-        jButton_B.setSize(20, 20);jButton_B.setLocation(50, 20);jPanel.add(jButton_B);
-        jButton_C.setSize(20, 20);jButton_C.setLocation(80, 20);jPanel.add(jButton_C);
-        jButton_D.setSize(20, 20);jButton_D.setLocation(20, 50);jPanel.add(jButton_D);
-        jButton_E.setSize(20, 20);jButton_E.setLocation(50, 50);jPanel.add(jButton_E);
-        jButton_F.setSize(20, 20);jButton_F.setLocation(80, 50);jPanel.add(jButton_F);
-        jButton_G.setSize(20, 20);jButton_G.setLocation(20, 80);jPanel.add(jButton_G);
-        jButton_H.setSize(20, 20);jButton_H.setLocation(50, 80);jPanel.add(jButton_H);
-        jButton_I.setSize(20, 20);jButton_I.setLocation(80, 80);jPanel.add(jButton_I);
+        jButton_A.setSize(20, 20);jButton_A.setLocation(20, 20);jButton_A.setLayout(null);jPanel.add(jButton_A);
+        jButton_B.setSize(20, 20);jButton_B.setLocation(50, 20);jButton_B.setLayout(null);jPanel.add(jButton_B);
+        jButton_C.setSize(20, 20);jButton_C.setLocation(80, 20);jButton_C.setLayout(null);jPanel.add(jButton_C);
+        jButton_D.setSize(20, 20);jButton_D.setLocation(20, 50);jButton_D.setLayout(null);jPanel.add(jButton_D);
+        jButton_E.setSize(20, 20);jButton_E.setLocation(50, 50);jButton_E.setLayout(null);jPanel.add(jButton_E);
+        jButton_F.setSize(20, 20);jButton_F.setLocation(80, 50);jButton_F.setLayout(null);jPanel.add(jButton_F);
+        jButton_G.setSize(20, 20);jButton_G.setLocation(20, 80);jButton_G.setLayout(null);jPanel.add(jButton_G);
+        jButton_H.setSize(20, 20);jButton_H.setLocation(50, 80);jButton_H.setLayout(null);jPanel.add(jButton_H);
+        jButton_I.setSize(20, 20);jButton_I.setLocation(80, 80);jButton_I.setLayout(null);jPanel.add(jButton_I);
         
         jButton_A.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { player_1 = true; if( (A==null) && (player_1==true) ){ A="X";jButton_A.setText("X");jButton_A.setEnabled(false);computer();checkStatus();player_1 = false; } } });
         jButton_B.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { player_1 = true; if( (B==null) && (player_1==true) ){ B="X";jButton_B.setText("X");jButton_B.setEnabled(false);computer();checkStatus();player_1 = false; } } });
@@ -125,6 +127,15 @@ public class Main extends JFrame{
         switch(elementSelected){
             case "test" : System.out.println("Test - OK"); break;
             case "A": A="O";jButton_A.setText("O");jButton_A.setEnabled(false);computer();checkStatus(); break;
+            case "B": A="O";jButton_B.setText("O");jButton_B.setEnabled(false);computer();checkStatus(); break;
+            case "C": A="O";jButton_C.setText("O");jButton_C.setEnabled(false);computer();checkStatus(); break;
+            case "D": A="O";jButton_D.setText("O");jButton_D.setEnabled(false);computer();checkStatus(); break;
+            case "E": A="O";jButton_E.setText("O");jButton_E.setEnabled(false);computer();checkStatus(); break;
+            case "F": A="O";jButton_F.setText("O");jButton_F.setEnabled(false);computer();checkStatus(); break;
+            case "G": A="O";jButton_G.setText("O");jButton_G.setEnabled(false);computer();checkStatus(); break;
+            case "H": A="O";jButton_H.setText("O");jButton_H.setEnabled(false);computer();checkStatus(); break;
+            case "I": A="O";jButton_I.setText("O");jButton_I.setEnabled(false);computer();checkStatus(); break;
+            
         }
     }
     
