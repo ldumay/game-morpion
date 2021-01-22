@@ -6,4 +6,4 @@ Chaque version possède son dossier selon le langage utilisé.
 ### Version :
 - Version Java : [code source](https://github.com/ldumay/game-morpion/tree/main/version-java/Morpion) - [demo ".jar"](https://github.com/ldumay/game-morpion/blob/main/version-java/Morpion/dist/Morpion.jar)
 
-Dernière version du projet : 0.0.2
+Dernière version du projet : ".jar" - 0.0.1 [stable] - 0.0.9 [en dev.]

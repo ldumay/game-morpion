@@ -5,13 +5,13 @@
  */
 package fr.ldumay;
 
-import ldumay.lib.infoSystem.infoSystem;
+import ldumay.lib.essentials.*;
+import ldumay.lib.infoSystem.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 
@@ -38,6 +38,8 @@ public class Main extends JFrame{
     String H = null;
     String I = null;
     
+    String gameMode = "Facile";
+    
     String messageWin = "Jeu Gagner\nVous avez battu l'ordianteur.\nLe jeu va se redémarrer.";
     String messageLose = "Jeu Perdu\nL'ordniateur vous à battu.\nLe jeu va se redémarrer.";
     
@@ -56,10 +58,14 @@ public class Main extends JFrame{
     boolean player_2 = false;
     
     JLabel jLabelStatut = new JLabel("Staut : Nouveau en cours ...");
+    JLabel jLabelMode = new JLabel("Mode : "+gameMode);
     JButton jButton_ResetGame = new JButton("Redémarrer le jeu");
     JButton jButton_StopGame = new JButton("Quitter le jeu");
     
     JPanel jPanel = new JPanel();
+    JMenuBar menuBar = new JMenuBar();
+    
+    WebLink webLink = new WebLink();
     
     /**
      * @param args the command line arguments
@@ -100,6 +106,7 @@ public class Main extends JFrame{
         jButton_I.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { player_1 = true; if( (I==null) && (player_1==true) ){ I="X";jButton_I.setText("X");jButton_I.setEnabled(false);computer();checkStatus();player_1 = false; } } });
         
         jLabelStatut.setSize(180, 20);jLabelStatut.setLocation(80, 80);jPanel.add(jLabelStatut);
+        jLabelMode.setSize(170, 20);jLabelMode.setLocation(80, 80);jPanel.add(jLabelMode);
         
         jButton_ResetGame.setSize(20, 20);jButton_ResetGame.setLocation(80, 80);jPanel.add(jButton_ResetGame);
         jButton_StopGame.setSize(20, 20);jButton_StopGame.setLocation(80, 80);jPanel.add(jButton_StopGame);
@@ -117,8 +124,41 @@ public class Main extends JFrame{
         this.setSize(width/2, height/2);
         this.setLocationRelativeTo(null);
         
+        JMenu jMenuLevel = new JMenu("Niveau du jeu");
+        JMenuItem itemLevelEsay = new JMenuItem("Facile", 'N');
+        JMenuItem itemLevelNormal = new JMenuItem("Normal", 'N');
+        JMenuItem itemLevelHard = new JMenuItem("Difficile", 'N');
+        jMenuLevel.add(itemLevelEsay);
+        jMenuLevel.add(itemLevelNormal);
+        jMenuLevel.add(itemLevelHard);
+        menuBar.add(jMenuLevel);
+        
+        JMenu jMenuAbout = new JMenu("A propos");
+        JMenuItem itemLdumayWebSite = new JMenuItem("LDumay.fr [Site Web]", 'N');
+        JMenuItem itemLdumayGit = new JMenuItem("LDumay.fr [GitHub.com]", 'N');
+        jMenuAbout.add(itemLdumayWebSite);
+        jMenuAbout.add(itemLdumayGit);
+        menuBar.add(jMenuAbout);
+        
+        ActionListener actionLdumayWebSite = new ActionListener() {
+        public void actionPerformed(ActionEvent event) {
+                webLink.openWebpage("https://ldumay.fr/");
+                //System.out.println("Elément de menu [" + event.getActionCommand() + "] utilisé.");
+            }
+        };
+        itemLdumayWebSite.addActionListener(actionLdumayWebSite);
+        
+        ActionListener actionLdumayGit = new ActionListener() {
+        public void actionPerformed(ActionEvent event) {
+                webLink.openWebpage("https://github.com/ldumay/");
+                //System.out.println("Elément de menu [" + event.getActionCommand() + "] utilisé.");
+            }
+        };
+        itemLdumayGit.addActionListener(actionLdumayGit);
+        
+        this.setJMenuBar(menuBar);
         this.setContentPane(jPanel);
-        this.setSize(250,215);
+        this.setSize(250,245);
         this.setVisible(true);
         this.setName(titleJFrame);
     }
