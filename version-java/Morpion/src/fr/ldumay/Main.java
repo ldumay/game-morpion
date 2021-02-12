@@ -5,6 +5,7 @@
  */
 package fr.ldumay;
 
+import java.awt.BorderLayout;
 import ldumay.lib.essentials.*;
 import ldumay.lib.infoSystem.*;
 import java.awt.Dimension;
@@ -24,7 +25,7 @@ public class Main extends JFrame{
     String projectAuteur = "LDumay.Fr";
     String projectCategoryTitle = "Games";
     String projectGamesTitle = "Morpion";
-    String projectVersion = "0.0.1";
+    String projectVersion = "0.1.0";
     String titleJFrame = ""+projectAuteur+" | "+ projectCategoryTitle
             +" | "+projectGamesTitle+" | Version ["+projectVersion+"]";
     
@@ -42,6 +43,7 @@ public class Main extends JFrame{
     
     String messageWin = "Jeu Gagner\nVous avez battu l'ordianteur.\nLe jeu va se redémarrer.";
     String messageLose = "Jeu Perdu\nL'ordniateur vous à battu.\nLe jeu va se redémarrer.";
+    String messageSystemNotCompatibility = "Oups !\nDésoler mais votre PC n'est pas pris en charge.";
     
     JButton jButton_A = new JButton("_");
     JButton jButton_B = new JButton("_");
@@ -59,41 +61,55 @@ public class Main extends JFrame{
     
     JLabel jLabelStatut = new JLabel("Staut : Nouveau en cours ...");
     JLabel jLabelMode = new JLabel("Mode : "+gameMode);
-    JButton jButton_ResetGame = new JButton("Redémarrer le jeu");
-    JButton jButton_StopGame = new JButton("Quitter le jeu");
     
     JPanel jPanel = new JPanel();
     JMenuBar menuBar = new JMenuBar();
     
+    infoSystem infoOS = new infoSystem(true, true);
     WebLink webLink = new WebLink();
     
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    int width = screenSize.width;
+    int height = screenSize.height;
+    /*
+    System.out.println("width : "+width);
+    System.out.println("height : "+height);
+    */
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        ArrayList infoOS = new infoSystem().InfosRunSystem(true, true);
+        //--
+        //System.out.println("Elément de menu [" + event.getActionCommand() + "] utilisé.");
+        //--
         JFrame mainJFrame = new Main();
     }
     
     public Main() {
-        super("Title");
+        super();
+        
+        // Préparation d'un message d'erreur
+        // checkComputerUser();
+        
+        jLabelStatut.setSize(420, 20);
+        jLabelStatut.setLocation(10, 10);
+        jLabelStatut.setBounds(20, 20, 420, 20); // positionX, positionY, witdh, height
+        jPanel.add(jLabelStatut, BorderLayout.CENTER);
+        
+        jLabelMode.setSize(170, 20);jLabelMode.setLocation(80, 80);jPanel.add(jLabelMode, BorderLayout.CENTER);
 
-        WindowListener l = new WindowAdapter() {
-            public void windowClosing(WindowEvent e){ stopGame(); }
-        };
+        jButton_A.setSize(20, 20);jButton_A.setLocation(20, 20);jButton_A.setLayout(null);jPanel.add(jButton_A, BorderLayout.WEST);
+        jButton_B.setSize(20, 20);jButton_B.setLocation(50, 20);jButton_B.setLayout(null);jPanel.add(jButton_B, BorderLayout.CENTER);
+        jButton_C.setSize(20, 20);jButton_C.setLocation(80, 20);jButton_C.setLayout(null);jPanel.add(jButton_C, BorderLayout.EAST);
         
-        addWindowListener(l);
+        jButton_D.setSize(20, 20);jButton_D.setLocation(20, 50);jButton_D.setLayout(null);jPanel.add(jButton_D, BorderLayout.WEST);
+        jButton_E.setSize(20, 20);jButton_E.setLocation(50, 50);jButton_E.setLayout(null);jPanel.add(jButton_E, BorderLayout.CENTER);
+        jButton_F.setSize(20, 20);jButton_F.setLocation(80, 50);jButton_F.setLayout(null);jPanel.add(jButton_F, BorderLayout.EAST);
         
-        jButton_A.setSize(20, 20);jButton_A.setLocation(20, 20);jButton_A.setLayout(null);jPanel.add(jButton_A);
-        jButton_B.setSize(20, 20);jButton_B.setLocation(50, 20);jButton_B.setLayout(null);jPanel.add(jButton_B);
-        jButton_C.setSize(20, 20);jButton_C.setLocation(80, 20);jButton_C.setLayout(null);jPanel.add(jButton_C);
-        jButton_D.setSize(20, 20);jButton_D.setLocation(20, 50);jButton_D.setLayout(null);jPanel.add(jButton_D);
-        jButton_E.setSize(20, 20);jButton_E.setLocation(50, 50);jButton_E.setLayout(null);jPanel.add(jButton_E);
-        jButton_F.setSize(20, 20);jButton_F.setLocation(80, 50);jButton_F.setLayout(null);jPanel.add(jButton_F);
-        jButton_G.setSize(20, 20);jButton_G.setLocation(20, 80);jButton_G.setLayout(null);jPanel.add(jButton_G);
-        jButton_H.setSize(20, 20);jButton_H.setLocation(50, 80);jButton_H.setLayout(null);jPanel.add(jButton_H);
-        jButton_I.setSize(20, 20);jButton_I.setLocation(80, 80);jButton_I.setLayout(null);jPanel.add(jButton_I);
+        jButton_G.setSize(20, 20);jButton_G.setLocation(20, 80);jButton_G.setLayout(null);jPanel.add(jButton_G, BorderLayout.WEST);
+        jButton_H.setSize(20, 20);jButton_H.setLocation(50, 80);jButton_H.setLayout(null);jPanel.add(jButton_H, BorderLayout.CENTER);
+        jButton_I.setSize(20, 20);jButton_I.setLocation(80, 80);jButton_I.setLayout(null);jPanel.add(jButton_I, BorderLayout.EAST);
         
         jButton_A.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { player_1 = true; if( (A==null) && (player_1==true) ){ A="X";jButton_A.setText("X");jButton_A.setEnabled(false);computer();checkStatus();player_1 = false; } } });
         jButton_B.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { player_1 = true; if( (B==null) && (player_1==true) ){ B="X";jButton_B.setText("X");jButton_B.setEnabled(false);computer();checkStatus();player_1 = false; } } });
@@ -105,24 +121,17 @@ public class Main extends JFrame{
         jButton_H.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { player_1 = true; if( (H==null) && (player_1==true) ){ H="X";jButton_H.setText("X");jButton_H.setEnabled(false);computer();checkStatus();player_1 = false; } } });
         jButton_I.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { player_1 = true; if( (I==null) && (player_1==true) ){ I="X";jButton_I.setText("X");jButton_I.setEnabled(false);computer();checkStatus();player_1 = false; } } });
         
-        jLabelStatut.setSize(180, 20);jLabelStatut.setLocation(80, 80);jPanel.add(jLabelStatut);
-        jLabelMode.setSize(170, 20);jLabelMode.setLocation(80, 80);jPanel.add(jLabelMode);
+        // - - - [ Boutons ] - - -
         
-        jButton_ResetGame.setSize(20, 20);jButton_ResetGame.setLocation(80, 80);jPanel.add(jButton_ResetGame);
-        jButton_StopGame.setSize(20, 20);jButton_StopGame.setLocation(80, 80);jPanel.add(jButton_StopGame);
+        JMenu jMenuPrincipal = new JMenu("Menu Principal");
+        JMenuItem itemResetGame = new JMenuItem("Redémarrer le jeu", 'N');
+        JMenuItem itemStopGame = new JMenuItem("Quitter le jeu", 'N');
+        jMenuPrincipal.add(itemResetGame);
+        jMenuPrincipal.add(itemStopGame);
+        menuBar.add(jMenuPrincipal);
         
-        jButton_ResetGame.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { resetGame(); } });
-        jButton_StopGame.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { stopGame(); } });
-        
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int width = screenSize.width;
-        int height = screenSize.height;
-        /*
-        System.out.println("width : "+width);
-        System.out.println("height : "+height);
-        */
-        this.setSize(width/2, height/2);
-        this.setLocationRelativeTo(null);
+        ActionListener actionitemResetGame = new ActionListener() { public void actionPerformed(ActionEvent event) { resetGame(); } };itemResetGame.addActionListener(actionitemResetGame);
+        ActionListener actionitemStopGame = new ActionListener() { public void actionPerformed(ActionEvent event) { stopGame(); } };itemStopGame.addActionListener(actionitemStopGame);
         
         JMenu jMenuLevel = new JMenu("Niveau du jeu");
         JMenuItem itemLevelEsay = new JMenuItem("Facile", 'N');
@@ -132,6 +141,10 @@ public class Main extends JFrame{
         jMenuLevel.add(itemLevelNormal);
         jMenuLevel.add(itemLevelHard);
         menuBar.add(jMenuLevel);
+        ActionListener actionChangeGameMode = new ActionListener() { public void actionPerformed(ActionEvent event) { changeGameMode(event.getActionCommand()); } };
+        itemLevelEsay.addActionListener(actionChangeGameMode);
+        itemLevelNormal.addActionListener(actionChangeGameMode);
+        itemLevelHard.addActionListener(actionChangeGameMode);
         
         JMenu jMenuAbout = new JMenu("A propos");
         JMenuItem itemLdumayWebSite = new JMenuItem("LDumay.fr [Site Web]", 'N');
@@ -140,27 +153,29 @@ public class Main extends JFrame{
         jMenuAbout.add(itemLdumayGit);
         menuBar.add(jMenuAbout);
         
-        ActionListener actionLdumayWebSite = new ActionListener() {
-        public void actionPerformed(ActionEvent event) {
-                webLink.openWebpage("https://ldumay.fr/");
-                //System.out.println("Elément de menu [" + event.getActionCommand() + "] utilisé.");
-            }
-        };
-        itemLdumayWebSite.addActionListener(actionLdumayWebSite);
+        ActionListener actionLdumayWebSite = new ActionListener() { public void actionPerformed(ActionEvent event) { webLink.openWebpage("https://ldumay.fr/"); } };itemLdumayWebSite.addActionListener(actionLdumayWebSite);
+        ActionListener actionLdumayGit = new ActionListener() { public void actionPerformed(ActionEvent event) { webLink.openWebpage("https://github.com/ldumay/"); } };itemLdumayGit.addActionListener(actionLdumayGit);
         
-        ActionListener actionLdumayGit = new ActionListener() {
-        public void actionPerformed(ActionEvent event) {
-                webLink.openWebpage("https://github.com/ldumay/");
-                //System.out.println("Elément de menu [" + event.getActionCommand() + "] utilisé.");
-            }
-        };
-        itemLdumayGit.addActionListener(actionLdumayGit);
+        // - - - [ JFrame & JPanel ] - - -
+        
+        this.setSize(width/2, height/2);
+        this.setLocationRelativeTo(null);
+        
+        WindowListener l = new WindowAdapter() {
+            public void windowClosing(WindowEvent e){ stopGame(); }
+        }; addWindowListener(l);
         
         this.setJMenuBar(menuBar);
         this.setContentPane(jPanel);
-        this.setSize(250,245);
+        
+        pack();
+        
+        this.setLocationRelativeTo(null);
+        this.setTitle(titleJFrame);
+        this.setSize(500,245);
         this.setVisible(true);
-        this.setName(titleJFrame);
+        this.setResizable(false);
+        this.setLayout(new BorderLayout());
     }
     
     public void action(String elementSelected, int playerSelected){
@@ -254,5 +269,18 @@ public class Main extends JFrame{
     public void stopGame(){
         //System.out.println("Le jeu va s'arrêter.");
         System.exit(0);
+    }
+    
+    public void checkComputerUser(){
+        String systemArch = infoOS.systemArch;
+        String systemName = infoOS.systemName;
+        String systemJavaVersion = infoOS.systemJavaVersion;
+        String message = messageSystemNotCompatibility+"\nVotre système est un "+systemName+" "+systemArch+" avec Java "+systemJavaVersion+" d'installé.";
+        //--
+        JOptionPane.showMessageDialog(this, message, "Oh oh !", HEIGHT);
+    }
+    
+    public void changeGameMode(String gamemode) {
+        System.out.println("gamemode : "+gamemode);
     }
 }

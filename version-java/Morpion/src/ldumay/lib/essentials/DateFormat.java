@@ -24,10 +24,10 @@ import java.time.format.DateTimeFormatter;
  * <br/>
  * <br/>Functions :
  * <br/>- DateFormat.LocalDateTime(String "YYYY-MM-dd",LocalDateTime "dateInserted")
- <br/>  |--> Return String
+ * <br/>  |--> Return String
  * <br/>
  * <br/>- DateFormat.DateTimeField(String "YYYY-MM-dd", DateTimeField "dateInserted")
- <br/>  |--> Return String
+ * <br/>  |--> Return String
  * <br/>
  * <br/>
  * <br/>More : 
