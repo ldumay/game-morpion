@@ -25,7 +25,7 @@ public class Main extends JFrame{
     String projectAuteur = "LDumay.Fr";
     String projectCategoryTitle = "Games";
     String projectGamesTitle = "Morpion";
-    String projectVersion = "0.1.1";
+    String projectVersion = "0.1.2";
     String titleJFrame = ""+projectCategoryTitle
             +" | "+projectGamesTitle+" | V"+projectVersion+"";
     
@@ -84,6 +84,7 @@ public class Main extends JFrame{
     int morpionScreenSizeWidth = 0;
     int morpionScreenSizeHeight = 0;
     Dimension sizeLabel = new Dimension(0, 0);
+    Dimension sizeButtons = new Dimension(0, 0);
     int aboutScreenSizeWidth = 0;
     int aboutScreenSizeHeight = 0;
     Dimension aboutSizeLabel = new Dimension(0, 0);
@@ -112,39 +113,62 @@ public class Main extends JFrame{
             morpionScreenSizeWidth += 250;
             morpionScreenSizeHeight += 235;
             sizeLabel = new Dimension(200, 20);
+            
             //Size Frame about
             aboutScreenSizeWidth = 350;
             aboutScreenSizeHeight = 100;
             aboutSizeLabel = new Dimension(330, 90);
+            
+            jLabelStatut.setPreferredSize(sizeLabel);jPanel.add(jLabelStatut, BorderLayout.CENTER);
+            jLabelMode.setPreferredSize(sizeLabel);jPanel.add(jLabelMode, BorderLayout.CENTER);
+            jLabelPartiesNumber.setPreferredSize(sizeLabel);jPanel.add(jLabelPartiesNumber, BorderLayout.CENTER);
+            
+            //Button prepartion
+            
+            jButton_A.setSize(20, 20);jButton_A.setLocation(20, 20);jButton_A.setLayout(null);jPanel.add(jButton_A, BorderLayout.WEST);
+            jButton_B.setSize(20, 20);jButton_B.setLocation(50, 20);jButton_B.setLayout(null);jPanel.add(jButton_B, BorderLayout.CENTER);
+            jButton_C.setSize(20, 20);jButton_C.setLocation(80, 20);jButton_C.setLayout(null);jPanel.add(jButton_C, BorderLayout.EAST);
+
+            jButton_D.setSize(20, 20);jButton_D.setLocation(20, 50);jButton_D.setLayout(null);jPanel.add(jButton_D, BorderLayout.WEST);
+            jButton_E.setSize(20, 20);jButton_E.setLocation(50, 50);jButton_E.setLayout(null);jPanel.add(jButton_E, BorderLayout.CENTER);
+            jButton_F.setSize(20, 20);jButton_F.setLocation(80, 50);jButton_F.setLayout(null);jPanel.add(jButton_F, BorderLayout.EAST);
+
+            jButton_G.setSize(20, 20);jButton_G.setLocation(20, 80);jButton_G.setLayout(null);jPanel.add(jButton_G, BorderLayout.WEST);
+            jButton_H.setSize(20, 20);jButton_H.setLocation(50, 80);jButton_H.setLayout(null);jPanel.add(jButton_H, BorderLayout.CENTER);
+            jButton_I.setSize(20, 20);jButton_I.setLocation(80, 80);jButton_I.setLayout(null);jPanel.add(jButton_I, BorderLayout.EAST);
         }else if(infoOS.systemName.equals("Windows 10")){
             //-Size Frame morpion
-            morpionScreenSizeWidth += 250;
-            morpionScreenSizeHeight += 235;
-            sizeLabel = new Dimension(200, 20);
+            morpionScreenSizeWidth += 400;
+            morpionScreenSizeHeight += 335;
+            sizeLabel = new Dimension(350, 30);
+            
             //Size Frame about
             aboutScreenSizeWidth = 350;
-            aboutScreenSizeHeight = 100;
-            aboutSizeLabel = new Dimension(330, 90);
+            aboutScreenSizeHeight = 110;
+            aboutSizeLabel = new Dimension(330, 100);
+            
+            jLabelStatut.setPreferredSize(sizeLabel);jPanel.add(jLabelStatut, BorderLayout.CENTER);
+            jLabelMode.setPreferredSize(sizeLabel);jPanel.add(jLabelMode, BorderLayout.CENTER);
+            jLabelPartiesNumber.setPreferredSize(sizeLabel);jPanel.add(jLabelPartiesNumber, BorderLayout.CENTER);
+            
+            //Button prepartion
+            sizeButtons = new Dimension(100, 40);
+            
+            jButton_A.setPreferredSize(sizeButtons);jButton_A.setLocation(20, 20);jButton_A.setLayout(null);jPanel.add(jButton_A, BorderLayout.WEST);
+            jButton_B.setPreferredSize(sizeButtons);jButton_B.setLocation(50, 20);jButton_B.setLayout(null);jPanel.add(jButton_B, BorderLayout.CENTER);
+            jButton_C.setPreferredSize(sizeButtons);jButton_C.setLocation(80, 20);jButton_C.setLayout(null);jPanel.add(jButton_C, BorderLayout.EAST);
+
+            jButton_D.setPreferredSize(sizeButtons);jButton_D.setLocation(20, 50);jButton_D.setLayout(null);jPanel.add(jButton_D, BorderLayout.WEST);
+            jButton_E.setPreferredSize(sizeButtons);jButton_E.setLocation(50, 50);jButton_E.setLayout(null);jPanel.add(jButton_E, BorderLayout.CENTER);
+            jButton_F.setPreferredSize(sizeButtons);jButton_F.setLocation(80, 50);jButton_F.setLayout(null);jPanel.add(jButton_F, BorderLayout.EAST);
+
+            jButton_G.setPreferredSize(sizeButtons);jButton_G.setLocation(20, 80);jButton_G.setLayout(null);jPanel.add(jButton_G, BorderLayout.WEST);
+            jButton_H.setPreferredSize(sizeButtons);jButton_H.setLocation(50, 80);jButton_H.setLayout(null);jPanel.add(jButton_H, BorderLayout.CENTER);
+            jButton_I.setPreferredSize(sizeButtons);jButton_I.setLocation(80, 80);jButton_I.setLayout(null);jPanel.add(jButton_I, BorderLayout.EAST);
         }else {
             messageOtherComputer();
             stopGame();
         }
-        
-        jLabelStatut.setPreferredSize(sizeLabel);jPanel.add(jLabelStatut, BorderLayout.CENTER);
-        jLabelMode.setPreferredSize(sizeLabel);jPanel.add(jLabelMode, BorderLayout.CENTER);
-        jLabelPartiesNumber.setPreferredSize(sizeLabel);jPanel.add(jLabelPartiesNumber, BorderLayout.CENTER);
-
-        jButton_A.setSize(20, 20);jButton_A.setLocation(20, 20);jButton_A.setLayout(null);jPanel.add(jButton_A, BorderLayout.WEST);
-        jButton_B.setSize(20, 20);jButton_B.setLocation(50, 20);jButton_B.setLayout(null);jPanel.add(jButton_B, BorderLayout.CENTER);
-        jButton_C.setSize(20, 20);jButton_C.setLocation(80, 20);jButton_C.setLayout(null);jPanel.add(jButton_C, BorderLayout.EAST);
-        
-        jButton_D.setSize(20, 20);jButton_D.setLocation(20, 50);jButton_D.setLayout(null);jPanel.add(jButton_D, BorderLayout.WEST);
-        jButton_E.setSize(20, 20);jButton_E.setLocation(50, 50);jButton_E.setLayout(null);jPanel.add(jButton_E, BorderLayout.CENTER);
-        jButton_F.setSize(20, 20);jButton_F.setLocation(80, 50);jButton_F.setLayout(null);jPanel.add(jButton_F, BorderLayout.EAST);
-        
-        jButton_G.setSize(20, 20);jButton_G.setLocation(20, 80);jButton_G.setLayout(null);jPanel.add(jButton_G, BorderLayout.WEST);
-        jButton_H.setSize(20, 20);jButton_H.setLocation(50, 80);jButton_H.setLayout(null);jPanel.add(jButton_H, BorderLayout.CENTER);
-        jButton_I.setSize(20, 20);jButton_I.setLocation(80, 80);jButton_I.setLayout(null);jPanel.add(jButton_I, BorderLayout.EAST);
         
         jButton_A.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { player_1 = true; if( (A==null) && (player_1==true) ){ A="X";jButton_A.setText("X");jButton_A.setEnabled(false);computer();checkStatus();player_1 = false; } } });
         jButton_B.addActionListener(new ActionListener() { @Override public void actionPerformed(ActionEvent e) { player_1 = true; if( (B==null) && (player_1==true) ){ B="X";jButton_B.setText("X");jButton_B.setEnabled(false);computer();checkStatus();player_1 = false; } } });
