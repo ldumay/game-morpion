@@ -5,18 +5,15 @@
  */
 package fr.ldumay;
 
-import java.awt.BorderLayout;
 import ldumay.lib.essentials.*;
 import ldumay.lib.infoSystem.*;
+import java.util.*;
+import java.awt.event.*;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
-import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.Random;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+import javax.swing.text.*;
 
 
 /**
@@ -28,7 +25,7 @@ public class Main extends JFrame{
     String projectAuteur = "LDumay.Fr";
     String projectCategoryTitle = "Games";
     String projectGamesTitle = "Morpion";
-    String projectVersion = "0.1.0";
+    String projectVersion = "0.1.1";
     String titleJFrame = ""+projectCategoryTitle
             +" | "+projectGamesTitle+" | V"+projectVersion+"";
     
@@ -44,9 +41,16 @@ public class Main extends JFrame{
     
     String gameMode = "Facile";
     
+    //Checking information for operating system client
+    InfoSystem infoOS = new InfoSystem(true, true);
+    
     String messageWin = "Jeu Gagner\nVous avez battu l'ordianteur.\nLe jeu va se redémarrer.";
     String messageLose = "Jeu Perdu\nL'ordniateur vous à battu.\nLe jeu va se redémarrer.";
-    String messageSystemNotCompatibility = "Oups !\nDésoler mais votre PC n'est pas pris en charge.";
+    String messageSystemNotCompatibility = "Oups !"
+            + "\n\nDésoler mais ce jeu n'est pas pris en charge pour votre PC."
+            + "\nPour le moment, seul \"Mac OS X\" et \"Windows 10\" sont pris en charge."
+            + "\nOr, votre système est un "+infoOS.systemName+"."
+            + "\n\nLe jeu va donc s'éteindre.";
     
     JButton jButton_A = new JButton("_");
     JButton jButton_B = new JButton("_");
@@ -75,9 +79,6 @@ public class Main extends JFrame{
     
     //Checking information for screen client
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    
-    //Checking information for operating system client
-    InfoSystem infoOS = new InfoSystem(true, true);
     
     //Sizes Frames
     int morpionScreenSizeWidth = 0;
@@ -115,16 +116,18 @@ public class Main extends JFrame{
             aboutScreenSizeWidth = 350;
             aboutScreenSizeHeight = 100;
             aboutSizeLabel = new Dimension(330, 90);
-        } else {
-            messageOtherComputer();
+        }else if(infoOS.systemName.equals("Windows 10")){
             //-Size Frame morpion
-            morpionScreenSizeWidth += 300;
-            morpionScreenSizeHeight += 245;
-            sizeLabel = new Dimension(320, 10);
+            morpionScreenSizeWidth += 250;
+            morpionScreenSizeHeight += 235;
+            sizeLabel = new Dimension(200, 20);
             //Size Frame about
-            aboutScreenSizeWidth = 320;
+            aboutScreenSizeWidth = 350;
             aboutScreenSizeHeight = 100;
-            aboutSizeLabel = new Dimension(300, 90);
+            aboutSizeLabel = new Dimension(330, 90);
+        }else {
+            messageOtherComputer();
+            stopGame();
         }
         
         jLabelStatut.setPreferredSize(sizeLabel);jPanel.add(jLabelStatut, BorderLayout.CENTER);
@@ -319,11 +322,7 @@ public class Main extends JFrame{
     }
     
     public void messageOtherComputer(){
-        String systemArch = infoOS.systemArch;
-        String systemName = infoOS.systemName;
-        String systemJavaVersion = infoOS.systemJavaVersion;
-        String message = messageSystemNotCompatibility+"\nVotre système est un "+systemName+" "+systemArch+" avec Java "+systemJavaVersion+" d'installé.";
-        JOptionPane.showMessageDialog(this, message, "Oh oh !", HEIGHT);
+        JOptionPane.showMessageDialog(this, messageSystemNotCompatibility, "Oh oh !", HEIGHT);
     }
     
     public void messageMorpionAbout(){
@@ -331,7 +330,7 @@ public class Main extends JFrame{
         frameMorpionAbout.setSize(aboutScreenSizeWidth, aboutScreenSizeHeight);
         
         String message = "Ce Morpion a été crée par Loïc Dumay.\nCelui-ci est mon premier jeu en Java."
-                + "\nN'hésitez pas à consulter mon Site et mon GitHub.\nMerci à vous d'avoir testé ce 1er petit programme Java.";
+                + "\nN'hésitez pas à consulter mon Site et mon GitHub.\nMerci à vous d'avoir testé ce 1er petit jeu Java.";
         
         JTextPane  messageTextPane = new JTextPane();
         messageTextPane.setText(message);
