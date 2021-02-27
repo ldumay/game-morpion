@@ -12,7 +12,7 @@ import java.net.URL;
 
 /**
  *
- * @author mtl
+ * @author ldumay
  */
 public class WebLink {
     

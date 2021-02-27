@@ -7,7 +7,7 @@ package ldumay.lib.essentials;
 
 /**
  *
- * @author dumay
+ * @author ldumay
  */
 public class ConverterBytesToOctets {
 

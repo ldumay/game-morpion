@@ -14,11 +14,14 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 
 /**
  *
- * @author mtl
+ * @author ldumay
  */
 public class Main extends JFrame{
     
@@ -26,8 +29,8 @@ public class Main extends JFrame{
     String projectCategoryTitle = "Games";
     String projectGamesTitle = "Morpion";
     String projectVersion = "0.1.0";
-    String titleJFrame = ""+projectAuteur+" | "+ projectCategoryTitle
-            +" | "+projectGamesTitle+" | Version ["+projectVersion+"]";
+    String titleJFrame = ""+projectCategoryTitle
+            +" | "+projectGamesTitle+" | V"+projectVersion+"";
     
     String A = null;
     String B = null;
@@ -59,23 +62,31 @@ public class Main extends JFrame{
     boolean player_1 = false;
     boolean player_2 = false;
     
-    JLabel jLabelStatut = new JLabel("Staut : Nouveau en cours ...");
+    int partiesNumber = 0;
+    
+    JLabel jLabelStatut = new JLabel("Staut : Partie en cours ...");
     JLabel jLabelMode = new JLabel("Mode : "+gameMode);
+    JLabel jLabelPartiesNumber = new JLabel("Nombre de parties jouée : "+partiesNumber);
     
     JPanel jPanel = new JPanel();
     JMenuBar menuBar = new JMenuBar();
     
-    infoSystem infoOS = new infoSystem(true, true);
     WebLink webLink = new WebLink();
     
+    //Checking information for screen client
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    int width = screenSize.width;
-    int height = screenSize.height;
-    /*
-    System.out.println("width : "+width);
-    System.out.println("height : "+height);
-    */
-
+    
+    //Checking information for operating system client
+    InfoSystem infoOS = new InfoSystem(true, true);
+    
+    //Sizes Frames
+    int morpionScreenSizeWidth = 0;
+    int morpionScreenSizeHeight = 0;
+    Dimension sizeLabel = new Dimension(0, 0);
+    int aboutScreenSizeWidth = 0;
+    int aboutScreenSizeHeight = 0;
+    Dimension aboutSizeLabel = new Dimension(0, 0);
+    
     /**
      * @param args the command line arguments
      */
@@ -89,15 +100,36 @@ public class Main extends JFrame{
     public Main() {
         super();
         
-        // Préparation d'un message d'erreur
-        // checkComputerUser();
+        //Checking operating system informations for optimisation
+        int clientScreenWidth = screenSize.width;
+        int clientScreenHeight = screenSize.height;
+        System.out.println("Client Width : "+clientScreenWidth);
+        System.out.println("Client Height : "+clientScreenHeight);
+        //--
+        if(infoOS.systemName.equals("Mac OS X")){
+            //-Size Frame morpion
+            morpionScreenSizeWidth += 250;
+            morpionScreenSizeHeight += 235;
+            sizeLabel = new Dimension(200, 20);
+            //Size Frame about
+            aboutScreenSizeWidth = 350;
+            aboutScreenSizeHeight = 100;
+            aboutSizeLabel = new Dimension(330, 90);
+        } else {
+            messageOtherComputer();
+            //-Size Frame morpion
+            morpionScreenSizeWidth += 300;
+            morpionScreenSizeHeight += 245;
+            sizeLabel = new Dimension(320, 10);
+            //Size Frame about
+            aboutScreenSizeWidth = 320;
+            aboutScreenSizeHeight = 100;
+            aboutSizeLabel = new Dimension(300, 90);
+        }
         
-        jLabelStatut.setSize(420, 20);
-        jLabelStatut.setLocation(10, 10);
-        jLabelStatut.setBounds(20, 20, 420, 20); // positionX, positionY, witdh, height
-        jPanel.add(jLabelStatut, BorderLayout.CENTER);
-        
-        jLabelMode.setSize(170, 20);jLabelMode.setLocation(80, 80);jPanel.add(jLabelMode, BorderLayout.CENTER);
+        jLabelStatut.setPreferredSize(sizeLabel);jPanel.add(jLabelStatut, BorderLayout.CENTER);
+        jLabelMode.setPreferredSize(sizeLabel);jPanel.add(jLabelMode, BorderLayout.CENTER);
+        jLabelPartiesNumber.setPreferredSize(sizeLabel);jPanel.add(jLabelPartiesNumber, BorderLayout.CENTER);
 
         jButton_A.setSize(20, 20);jButton_A.setLocation(20, 20);jButton_A.setLayout(null);jPanel.add(jButton_A, BorderLayout.WEST);
         jButton_B.setSize(20, 20);jButton_B.setLocation(50, 20);jButton_B.setLayout(null);jPanel.add(jButton_B, BorderLayout.CENTER);
@@ -123,7 +155,7 @@ public class Main extends JFrame{
         
         // - - - [ Boutons ] - - -
         
-        JMenu jMenuPrincipal = new JMenu("Menu Principal");
+        JMenu jMenuPrincipal = new JMenu("Menu");
         JMenuItem itemResetGame = new JMenuItem("Redémarrer le jeu", 'N');
         JMenuItem itemStopGame = new JMenuItem("Quitter le jeu", 'N');
         jMenuPrincipal.add(itemResetGame);
@@ -149,33 +181,34 @@ public class Main extends JFrame{
         JMenu jMenuAbout = new JMenu("A propos");
         JMenuItem itemLdumayWebSite = new JMenuItem("LDumay.fr [Site Web]", 'N');
         JMenuItem itemLdumayGit = new JMenuItem("LDumay.fr [GitHub.com]", 'N');
+        JMenuItem itemLdumayMorpion = new JMenuItem("Crédits", 'N');
         jMenuAbout.add(itemLdumayWebSite);
         jMenuAbout.add(itemLdumayGit);
+        jMenuAbout.add(itemLdumayMorpion);
         menuBar.add(jMenuAbout);
         
         ActionListener actionLdumayWebSite = new ActionListener() { public void actionPerformed(ActionEvent event) { webLink.openWebpage("https://ldumay.fr/"); } };itemLdumayWebSite.addActionListener(actionLdumayWebSite);
         ActionListener actionLdumayGit = new ActionListener() { public void actionPerformed(ActionEvent event) { webLink.openWebpage("https://github.com/ldumay/"); } };itemLdumayGit.addActionListener(actionLdumayGit);
+        ActionListener actionLdumayMorpion = new ActionListener() { public void actionPerformed(ActionEvent event) { messageMorpionAbout(); } };itemLdumayMorpion.addActionListener(actionLdumayMorpion);
         
         // - - - [ JFrame & JPanel ] - - -
-        
-        this.setSize(width/2, height/2);
-        this.setLocationRelativeTo(null);
-        
-        WindowListener l = new WindowAdapter() {
-            public void windowClosing(WindowEvent e){ stopGame(); }
-        }; addWindowListener(l);
         
         this.setJMenuBar(menuBar);
         this.setContentPane(jPanel);
         
         pack();
         
-        this.setLocationRelativeTo(null);
         this.setTitle(titleJFrame);
-        this.setSize(500,245);
+        this.setSize(morpionScreenSizeWidth,morpionScreenSizeHeight);
+        //this.setSize(width/2, height/2);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
         this.setLayout(new BorderLayout());
+        
+        WindowListener l = new WindowAdapter() {
+            public void windowClosing(WindowEvent e){ stopGame(); }
+        }; addWindowListener(l);
     }
     
     public void action(String elementSelected, int playerSelected){
@@ -263,7 +296,11 @@ public class Main extends JFrame{
         G = null;jButton_G.setText("_");jButton_G.setEnabled(true);
         H = null;jButton_H.setText("_");jButton_H.setEnabled(true);
         I = null;jButton_I.setText("_");jButton_I.setEnabled(true);
-        //System.out.println("Le jeu a été redémarré.");
+        partiesNumber++;
+        jLabelStatut.setText("Staut : Partie en cours ...");
+        jLabelMode.setText("Mode : "+gameMode);
+        jLabelPartiesNumber.setText("Nombre de parties jouée : "+partiesNumber);
+        System.out.println("Le jeu a été redémarré.");
     }
     
     public void stopGame(){
@@ -271,16 +308,52 @@ public class Main extends JFrame{
         System.exit(0);
     }
     
-    public void checkComputerUser(){
+    public void changeGameMode(String gamemode) {
+        System.out.println("gamemode : "+gamemode);
+        switch(gamemode){
+            case "Facile": gameMode="Facile";  break;
+            case "Normal": gameMode="Normal";  break;
+            case "Difficile": gameMode="Difficile";  break;
+        }
+        jLabelMode.setText("Mode : "+gameMode);
+    }
+    
+    public void messageOtherComputer(){
         String systemArch = infoOS.systemArch;
         String systemName = infoOS.systemName;
         String systemJavaVersion = infoOS.systemJavaVersion;
         String message = messageSystemNotCompatibility+"\nVotre système est un "+systemName+" "+systemArch+" avec Java "+systemJavaVersion+" d'installé.";
-        //--
         JOptionPane.showMessageDialog(this, message, "Oh oh !", HEIGHT);
     }
     
-    public void changeGameMode(String gamemode) {
-        System.out.println("gamemode : "+gamemode);
+    public void messageMorpionAbout(){
+        JFrame frameMorpionAbout = new JFrame();
+        frameMorpionAbout.setSize(aboutScreenSizeWidth, aboutScreenSizeHeight);
+        
+        String message = "Ce Morpion a été crée par Loïc Dumay.\nCelui-ci est mon premier jeu en Java."
+                + "\nN'hésitez pas à consulter mon Site et mon GitHub.\nMerci à vous d'avoir testé ce 1er petit programme Java.";
+        
+        JTextPane  messageTextPane = new JTextPane();
+        messageTextPane.setText(message);
+        messageTextPane.setEditable(false);
+        //Centrage du JTextPane
+        StyledDocument styleMessageTextPane = messageTextPane.getStyledDocument();
+        SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        styleMessageTextPane.setParagraphAttributes(0, styleMessageTextPane.getLength(), center, false);
+        
+        JTextArea  messageTextArea = new JTextArea(message);
+        messageTextArea.setHighlighter(null);
+        
+        JScrollPane messageScrollPane = new JScrollPane(messageTextPane);
+        messageScrollPane.setPreferredSize(aboutSizeLabel);
+        
+        frameMorpionAbout.setTitle("Crédits");
+        frameMorpionAbout.getContentPane().add(messageScrollPane);
+        frameMorpionAbout.setLocationRelativeTo(null);
+        frameMorpionAbout.setResizable(false);
+        frameMorpionAbout.setVisible(true);
+        frameMorpionAbout.setLayout(new BorderLayout());
+        frameMorpionAbout.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 }

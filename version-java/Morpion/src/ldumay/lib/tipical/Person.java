@@ -10,7 +10,7 @@ import ldumay.lib.essentials.GenerateBirthday;
 
 /**
  *
- * @author dumay
+ * @author ldumay
  */
 
 /**

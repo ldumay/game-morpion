@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author dumay
+ * @author ldumay
  */
 
 /**

@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 /**
  *
- * @author dumay
+ * @author ldumay
  */
-public class infoSystem {
+public class InfoSystem {
 
     public String systemArch = System.getProperty("os.arch");
     public String systemName = System.getProperty("os.name");
@@ -35,7 +35,7 @@ public class infoSystem {
     
     private String Space = "# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #";
     
-    public infoSystem(boolean osInfo, boolean osDisks) {
+    public InfoSystem(boolean osInfo, boolean osDisks) {
         
         this.osInfo = osInfo;
         this.osDisks = osDisks;
