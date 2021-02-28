@@ -25,7 +25,7 @@ public class Main extends JFrame{
     String projectAuteur = "LDumay.Fr";
     String projectCategoryTitle = "Games";
     String projectGamesTitle = "Morpion";
-    String projectVersion = "0.1.2";
+    String projectVersion = "0.1.4";
     String titleJFrame = ""+projectCategoryTitle
             +" | "+projectGamesTitle+" | V"+projectVersion+"";
     
@@ -67,10 +67,13 @@ public class Main extends JFrame{
     boolean player_2 = false;
     
     int partiesNumber = 0;
+    int partiesWin = 0;
+    int partiesLose = 0;
     
     JLabel jLabelStatut = new JLabel("Staut : Partie en cours ...");
     JLabel jLabelMode = new JLabel("Mode : "+gameMode);
-    JLabel jLabelPartiesNumber = new JLabel("Nombre de parties jouée : "+partiesNumber);
+    String messageParties = "Nb Ttl : "+partiesNumber+" | Win : "+partiesWin+" | Lose "+partiesLose+"";
+    JLabel jLabelPartiesNumber = new JLabel(messageParties);
     
     JPanel jPanel = new JPanel();
     JMenuBar menuBar = new JMenuBar();
@@ -295,6 +298,7 @@ public class Main extends JFrame{
             ( (A=="X") && (E=="X") && (I=="X") ) ||
             ( (C=="X") && (E=="X") && (G=="X") ) ){
             JOptionPane.showMessageDialog(this, messageWin, "Super !", HEIGHT);
+            partiesWin++;
             resetGame();
             //System.out.println("Le jeu est gagné.");
         }
@@ -308,6 +312,7 @@ public class Main extends JFrame{
                 ( (A=="O") && (E=="O") && (I=="O") ) ||
                 ( (C=="O") && (E=="O") && (G=="O") ) ){
             JOptionPane.showMessageDialog(this, messageLose, "Dommage !", HEIGHT);
+            partiesLose++;
             resetGame();
             //System.out.println("Le jeu est gagné.");
         }
@@ -326,7 +331,7 @@ public class Main extends JFrame{
         partiesNumber++;
         jLabelStatut.setText("Staut : Partie en cours ...");
         jLabelMode.setText("Mode : "+gameMode);
-        jLabelPartiesNumber.setText("Nombre de parties jouée : "+partiesNumber);
+        jLabelPartiesNumber.setText("Nb Ttl : "+partiesNumber+" | Win : "+partiesWin+" | Lose "+partiesLose+"");
         System.out.println("Le jeu a été redémarré.");
     }
     
