@@ -144,8 +144,8 @@ public class Main extends JFrame{
             
             //Size Frame about
             aboutScreenSizeWidth = 350;
-            aboutScreenSizeHeight = 110;
-            aboutSizeLabel = new Dimension(330, 100);
+            aboutScreenSizeHeight = 120;
+            aboutSizeLabel = new Dimension(330, 110);
             
             jLabelStatut.setPreferredSize(sizeLabel);jPanel.add(jLabelStatut, BorderLayout.CENTER);
             jLabelMode.setPreferredSize(sizeLabel);jPanel.add(jLabelMode, BorderLayout.CENTER);
