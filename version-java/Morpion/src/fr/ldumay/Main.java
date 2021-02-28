@@ -25,7 +25,7 @@ public class Main extends JFrame{
     String projectAuteur = "LDumay.Fr";
     String projectCategoryTitle = "Games";
     String projectGamesTitle = "Morpion";
-    String projectVersion = "0.1.4";
+    String projectVersion = "0.1.5";
     String titleJFrame = ""+projectCategoryTitle
             +" | "+projectGamesTitle+" | V"+projectVersion+"";
     
@@ -44,8 +44,9 @@ public class Main extends JFrame{
     //Checking information for operating system client
     InfoSystem infoOS = new InfoSystem(true, true);
     
-    String messageWin = "Jeu Gagner\nVous avez battu l'ordianteur.\nLe jeu va se redémarrer.";
-    String messageLose = "Jeu Perdu\nL'ordniateur vous à battu.\nLe jeu va se redémarrer.";
+    String messageWin = "Jeu Gagner !\nVous avez battu l'ordianteur.\nLe jeu va se redémarrer.";
+    String messageLose = "Jeu Perdu !\nL'ordniateur vous à battu.\nLe jeu va se redémarrer.";
+    String messageNul = "Match Nul !\nL'ordinateur et vous-même avez perdez cette partie.\nLe jeu va se redémarrer.";
     String messageSystemNotCompatibility = "Oups !"
             + "\n\nDésoler mais ce jeu n'est pas pris en charge pour votre PC."
             + "\nPour le moment, seul \"Mac OS X\" et \"Windows 10\" sont pris en charge."
@@ -69,10 +70,12 @@ public class Main extends JFrame{
     int partiesNumber = 0;
     int partiesWin = 0;
     int partiesLose = 0;
+    int partiesNul = 0;
+    String partieCurrently = null;
     
     JLabel jLabelStatut = new JLabel("Staut : Partie en cours ...");
     JLabel jLabelMode = new JLabel("Mode : "+gameMode);
-    String messageParties = "Nb Ttl : "+partiesNumber+" | Win : "+partiesWin+" | Lose "+partiesLose+"";
+    String messageParties = "Ttl : "+partiesNumber+" | Win : "+partiesWin+" | Lose : "+partiesLose+" | Nul : "+partiesNul+"";
     JLabel jLabelPartiesNumber = new JLabel(messageParties);
     
     JPanel jPanel = new JPanel();
@@ -113,14 +116,14 @@ public class Main extends JFrame{
         //--
         if(infoOS.systemName.equals("Mac OS X")){
             //-Size Frame morpion
-            morpionScreenSizeWidth += 250;
+            morpionScreenSizeWidth += 290;
             morpionScreenSizeHeight += 235;
-            sizeLabel = new Dimension(200, 20);
+            sizeLabel = new Dimension(250, 20);
             
             //Size Frame about
             aboutScreenSizeWidth = 350;
             aboutScreenSizeHeight = 100;
-            aboutSizeLabel = new Dimension(330, 90);
+            aboutSizeLabel = new Dimension(360, 90);
             
             jLabelStatut.setPreferredSize(sizeLabel);jPanel.add(jLabelStatut, BorderLayout.CENTER);
             jLabelMode.setPreferredSize(sizeLabel);jPanel.add(jLabelMode, BorderLayout.CENTER);
@@ -197,8 +200,8 @@ public class Main extends JFrame{
         
         JMenu jMenuLevel = new JMenu("Niveau du jeu");
         JMenuItem itemLevelEsay = new JMenuItem("Facile", 'N');
-        JMenuItem itemLevelNormal = new JMenuItem("Normal", 'N');
-        JMenuItem itemLevelHard = new JMenuItem("Difficile", 'N');
+        JMenuItem itemLevelNormal = new JMenuItem("Normal (à venir)", 'N'); itemLevelNormal.setEnabled(false);
+        JMenuItem itemLevelHard = new JMenuItem("Difficile (à venir)", 'N'); itemLevelHard.setEnabled(false);
         jMenuLevel.add(itemLevelEsay);
         jMenuLevel.add(itemLevelNormal);
         jMenuLevel.add(itemLevelHard);
@@ -283,11 +286,14 @@ public class Main extends JFrame{
     }
     
     public void checkStatus(){
+        partieCurrently="Currenlty";
         System.out.println("- - - - - - -");
         System.out.println("Player 1 : "+player_1+" - Player 2 : "+player_2);
         System.out.println("A : "+A+" - B : "+B+" - C : "+C);
         System.out.println("D : "+D+" - E : "+E+" - F : "+F);
         System.out.println("G : "+G+" - H : "+H+" - I : "+I);
+        System.out.println("partiesWin : "+partiesWin+" - partiesLose : "+partiesLose);
+        System.out.println("partieCurrently : "+partieCurrently);
         //--
         if( ( (A=="X") && (B=="X") && (C=="X") ) ||
             ( (D=="X") && (E=="X") && (F=="X") ) ||
@@ -297,24 +303,20 @@ public class Main extends JFrame{
             ( (C=="X") && (F=="X") && (I=="X") ) ||
             ( (A=="X") && (E=="X") && (I=="X") ) ||
             ( (C=="X") && (E=="X") && (G=="X") ) ){
-            JOptionPane.showMessageDialog(this, messageWin, "Super !", HEIGHT);
-            partiesWin++;
-            resetGame();
-            //System.out.println("Le jeu est gagné.");
+            playerWin(1);
+        } else if( ( (A=="O") && (B=="O") && (C=="O") ) ||
+            ( (D=="O") && (E=="O") && (F=="O") ) ||
+            ( (G=="O") && (H=="O") && (I=="O") ) ||
+            ( (A=="O") && (D=="O") && (G=="O") ) ||
+            ( (B=="O") && (E=="O") && (H=="O") ) ||
+            ( (C=="O") && (F=="O") && (I=="O") ) ||
+            ( (A=="O") && (E=="O") && (I=="O") ) ||
+            ( (C=="O") && (E=="O") && (G=="O") ) ){
+            playerWin(0);
         }
-        //--
-        else if( ( (A=="O") && (B=="O") && (C=="O") ) ||
-                ( (D=="O") && (E=="O") && (F=="O") ) ||
-                ( (G=="O") && (H=="O") && (I=="O") ) ||
-                ( (A=="O") && (D=="O") && (G=="O") ) ||
-                ( (B=="O") && (E=="O") && (H=="O") ) ||
-                ( (C=="O") && (F=="O") && (I=="O") ) ||
-                ( (A=="O") && (E=="O") && (I=="O") ) ||
-                ( (C=="O") && (E=="O") && (G=="O") ) ){
-            JOptionPane.showMessageDialog(this, messageLose, "Dommage !", HEIGHT);
-            partiesLose++;
-            resetGame();
-            //System.out.println("Le jeu est gagné.");
+        if( (partieCurrently!=null && partieCurrently=="Currenlty")
+                && ( (A!=null && B!=null && C!=null) && (D!=null && E!=null && F!=null) && (G!=null && H!=null && I!=null) ) ){
+            playerWin(2);
         }
     }
     
@@ -328,16 +330,46 @@ public class Main extends JFrame{
         G = null;jButton_G.setText("_");jButton_G.setEnabled(true);
         H = null;jButton_H.setText("_");jButton_H.setEnabled(true);
         I = null;jButton_I.setText("_");jButton_I.setEnabled(true);
+        partieCurrently=null;
         partiesNumber++;
+        System.out.println("- - - - - - -");
         jLabelStatut.setText("Staut : Partie en cours ...");
         jLabelMode.setText("Mode : "+gameMode);
-        jLabelPartiesNumber.setText("Nb Ttl : "+partiesNumber+" | Win : "+partiesWin+" | Lose "+partiesLose+"");
+        jLabelPartiesNumber.setText("Ttl : "+partiesNumber+" | Win : "+partiesWin+" | Lose : "+partiesLose+" | Nul : "+partiesNul+"");
         System.out.println("Le jeu a été redémarré.");
     }
     
     public void stopGame(){
         //System.out.println("Le jeu va s'arrêter.");
         System.exit(0);
+    }
+    
+    public void playerWin(int playerWin){
+        if(playerWin==0){
+            partieCurrently="Win";
+            partiesLose++;
+            jLabelStatut.setText("Staut : Terminée !");
+            JOptionPane.showMessageDialog(this, messageLose, "Dommage !", HEIGHT);
+            resetGame();
+            System.out.println("Le jeu est perdu.");
+        } else if(playerWin==1){
+            partieCurrently="Lose";
+            partiesWin++;
+            jLabelStatut.setText("Staut : Terminée !");
+            JOptionPane.showMessageDialog(this, messageWin, "Super !", HEIGHT);
+            resetGame();
+            System.out.println("Le jeu est gagné.");
+        } else if(playerWin==2){
+            partieCurrently="Nul";
+            partiesNul++;
+            jLabelStatut.setText("Staut : Terminée !");
+            JOptionPane.showMessageDialog(this, messageNul, "Match Nul !", HEIGHT);
+            resetGame();
+            System.out.println("Le jeu est nul.");
+        }
+        System.out.println("- - - - - - -");
+        System.out.println("partiesWin : "+partiesWin+" - partiesLose : "+partiesLose);
+        System.out.println("partieCurrently : "+partieCurrently);
     }
     
     public void changeGameMode(String gamemode) {
